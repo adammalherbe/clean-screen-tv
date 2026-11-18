@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    1920x1080 at xhdpi = 960x540 dp. Everything stays inside 48 dp left/right and 28 dp
+    top/bottom (5% overscan). Top band: greeting left, glass card right (ends ~190 dp).
+    App tiles' glass at 206–318 dp (row centred near 45–50%), pills under them, then
+    the signature.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <FrameLayout
+        android:id="@+id/bg_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/bg_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/bg_top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop" />
+
+        <!-- Time-of-day tint for scenes without their own dawn/day/dusk/night photos. -->
+        <View
+            android:id="@+id/bg_tint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <View
+        android:id="@+id/scrim_top"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_gravity="top"
+        android:background="@drawable/scrim_top" />
+
+    <View
+        android:id="@+id/scrim_top_right"
+        android:layout_width="560dp"
+        android:layout_height="300dp"
+        android:layout_gravity="top|right"
+        android:background="@drawable/scrim_top_right" />
+
+    <View
+        android:id="@+id/scrim_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/scrim_bottom" />
+
+    <FrameLayout
+        android:id="@+id/home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="64dp"
+            android:layout_marginTop="52dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/greeting"
+                style="@style/HomeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-thin"
+                android:letterSpacing="0.01"
+                android:textSize="34sp" />
+
+            <!-- Next calendar event (a sample "Dinner" until a calendar URL is configured). -->
+            <TextView
+                android:id="@+id/next_event"
+                style="@style/HomeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.7"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-light"
+                android:letterSpacing="0.02"
+                android:maxWidth="400dp"
+                android:singleLine="true"
+                android:textSize="17sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- Clock, date, weather and forecast card; filled in code (TopCard). -->
+        <FrameLayout
+            android:id="@+id/top_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|right"
+            android:layout_marginTop="28dp"
+            android:layout_marginRight="48dp" />
+
+        <!-- Apps, then the pill row. Tile glass starts 22 dp (glow) below the column top. -->
+        <LinearLayout
+            android:id="@+id/center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="184dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/tiles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="horizontal" />
+
+            <FrameLayout
+                android:id="@+id/pills"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-6dp"
+                android:clipChildren="false"
+                android:clipToPadding="false" />
+        </LinearLayout>
+
+        <!-- The "Back to Chromecast?" card, between the pills and the signature. -->
+        <FrameLayout
+            android:id="@+id/resume_host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="36dp"
+            android:clipChildren="false" />
+
+
+        <!-- Maker's mark; bottom margin keeps it inside TV overscan. -->
+        <TextView
+            android:id="@+id/signature"
+            style="@style/HomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="34dp"
+            android:alpha="0.5"
+            android:fontFamily="sans-serif-thin"
+            android:letterSpacing="0.08"
+            android:shadowColor="#99000000"
+            android:shadowDy="1"
+            android:shadowRadius="6"
+            android:text=""
+            android:textSize="14sp" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/ambient_clock"
+        style="@style/HomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:alpha="0"
+        android:fontFamily="sans-serif-thin"
+        android:shadowRadius="24"
+        android:textSize="150sp" />
+
+    <FrameLayout
+        android:id="@+id/splash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FF07080A">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/splash_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0"
+                android:fontFamily="sans-serif-thin"
+                android:letterSpacing="0.06"
+                android:text="Clean Screen TV"
+                android:textColor="#FFFFFFFF"
+                android:textSize="56sp" />
+
+            <TextView
+                android:id="@+id/splash_credit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:alpha="0"
+                android:fontFamily="sans-serif-light"
+                android:letterSpacing="0.08"
+                android:text=""
+                android:textColor="#FFFFFFFF"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </FrameLayout>
+</FrameLayout>
